@@ -1,0 +1,42 @@
+.course{
+  display: block;
+  &:not(:last-child){
+    margin-bottom: rem(30px);
+  }
+  &__card{
+    display: flex;
+    gap: rem(20px);
+  }
+  &__card-image{
+    max-width: 230px;
+    height: auto;
+    object-fit: cover;
+  }
+  &__card-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  &__card-heading{
+    font-size: rem(20px);
+    color: $dark-700;
+  }
+  &__card-group{
+    display: flex;
+    gap: rem(8px);
+    color: $dark-700;
+  }
+  &__card-user-icon{
+    height: rem(30px);
+    width: rem(30px);
+    background-color: #18b3c7;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+  }&__card-icon-text{
+    color: $white;
+  }
+  &__card-user-text{
+    color: $dark-700;
+  }
+}

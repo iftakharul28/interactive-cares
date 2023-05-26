@@ -1,0 +1,19 @@
+.video-card{
+    &__image{
+        width: 100%;
+        height: auto;
+        border-radius: rem(8px);
+    }
+    &__body{
+        display: flex;
+        gap: rem(8px);
+    }
+    &__text{
+        color: $white;
+    }
+    &__thumbnail{
+        height: rem(36px);
+        width: rem(36px);
+        border-radius: 50%;
+    }
+}
