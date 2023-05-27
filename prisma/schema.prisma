@@ -18,6 +18,9 @@ model User {
     accounts      Account[]
     sessions      Session[]
     Course        Course[]
+
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @updatedAt @map(name: "updated_at")
 }
 
 model Account {
@@ -77,6 +80,9 @@ model Course {
     media_id    Int
     user_email  String
 
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @updatedAt @map(name: "updated_at")
+
     @@unique([slug_id])
     @@unique([category_id])
     @@unique([media_id])
@@ -87,6 +93,9 @@ model Slug {
     id     Int     @id @unique @default(autoincrement())
     url    String  @unique @db.VarChar(255)
     course Course?
+
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @updatedAt @map(name: "updated_at")
 }
 
 model Media {
@@ -94,6 +103,9 @@ model Media {
     title  String  @db.VarChar(255)
     url    String  @unique @db.VarChar(255)
     course Course?
+
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @updatedAt @map(name: "updated_at")
 }
 
 model Category {
@@ -101,6 +113,9 @@ model Category {
     title  String  @db.VarChar(255)
     url    String  @unique @db.VarChar(255)
     course Course?
+
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @updatedAt @map(name: "updated_at")
 }
 
 model Topic {
@@ -110,6 +125,9 @@ model Topic {
     course    Course  @relation(fields: [course_id], references: [id])
     video     Video[]
     course_id Int
+
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @updatedAt @map(name: "updated_at")
 
     @@unique([course_id])
 }
@@ -121,6 +139,9 @@ model Video {
     url      String @unique @db.VarChar(255)
     topic    Topic? @relation(fields: [topic_id], references: [id])
     topic_id Int?
+
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @updatedAt @map(name: "updated_at")
 
     @@unique([topic_id])
 }
