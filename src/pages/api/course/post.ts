@@ -52,27 +52,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             },
           },
           topic: {
-            connectOrCreate: {
-              create: {
-                title: topic.title,
-                url: topic.url,
-                video: {
-                  connectOrCreate: {
-                    create: {
-                      title: video.title,
-                      url: video.url,
-                      type: video.type,
-                    },
-                    where: {
-                      url: video.url,
-                    },
+            connectOrCreate: topic?.map(({ title, url }: { title: string; url: string }) => {
+              return {
+                create: {
+                  title: title,
+                  url: url,
+                  video: {
+                    connectOrCreate: video?.map(({ title, url, type }: { title: string; url: string; type: string }) => {
+                      return {
+                        create: {
+                          title: title,
+                          url: url,
+                          type: type,
+                        },
+                        where: {
+                          url: url,
+                        },
+                      };
+                    }),
                   },
                 },
-              },
-              where: {
-                url: topic.url,
-              },
-            },
+                where: {
+                  url: url,
+                },
+              };
+            }),
           },
           user: {
             connect: {

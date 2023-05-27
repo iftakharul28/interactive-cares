@@ -16,7 +16,6 @@ type Props = {
   videos: videoType[];
 };
 const PostForm = ({ categories, images, topics, videos }: Props) => {
-  console.log(categories, images, topics, videos);
   const [cource, setCource] = useState<Course | null>({
     title: "",
     slug: "",
@@ -46,35 +45,35 @@ const PostForm = ({ categories, images, topics, videos }: Props) => {
   }, 1000);
   const addPost = async (postData: unknown) => {
     console.log(postData);
-    // try {
-    //   const data = await Http.Post({
-    //     path: "cource/post",
-    //     data: JSON.stringify(postData),
-    //   });
-    //   if (data.status === 201) {
-    //     setCource({
-    //       title: "",
-    //       slug: "",
-    //       price: 0,
-    //       oldPrice: 0,
-    //       published: false,
-    //     });
-    //     // setCategory({
-    //     //   name: "",
-    //     //   category_slug: "",
-    //     //   image: "",
-    //     // });
-    //     // setTag({
-    //     //   name: "",
-    //     //   tag_slug: "",
-    //     // });
-    //   } else {
-    //     const content = await data.json();
-    //     console.log(content);
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    try {
+      const data = await Http.Post({
+        path: "course/post",
+        data: postData,
+      });
+      if (data.status === 201) {
+        setCource({
+          title: "",
+          slug: "",
+          price: 0,
+          oldPrice: 0,
+          published: false,
+        });
+        // setCategory({
+        //   name: "",
+        //   category_slug: "",
+        //   image: "",
+        // });
+        // setTag({
+        //   name: "",
+        //   tag_slug: "",
+        // });
+      } else {
+        const content = await data.json();
+        console.log(content);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <form className='form login__card-body' role='form'>
