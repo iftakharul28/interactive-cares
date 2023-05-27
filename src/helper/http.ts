@@ -2,16 +2,13 @@ import apiBaseUrl from "@/constants/variables";
 
 export const Get = async ({ path }: { path: string }) => {
   try {
-    const req = await fetch(`${apiBaseUrl()}/api/${path}`, {
+    return await fetch(`${apiBaseUrl()}/api/${path}`, {
       method: "GET",
       headers: {
         Accept: "application.json",
         "Content-Type": "application/json",
       },
     });
-    if (req.ok) {
-      return await req.json();
-    }
   } catch (error) {
     throw error;
   }

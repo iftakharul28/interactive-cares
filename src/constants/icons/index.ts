@@ -1,6 +1,8 @@
 export { default as CartIcon } from "./CartIcon";
-export { default as PersonIcon } from './PersonIcon';
-// export { default as  } from './';
+export { default as PersonIcon } from "./PersonIcon";
+export { default as PlusIcon } from "./PlusIcon";
+export { default as CloseIcon } from "./CloseIcon";
+export { default as DownIcon } from "./DownIcon";
 // export { default as  } from './';
 // export { default as  } from './';
 // export { default as  } from './';

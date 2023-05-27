@@ -53,8 +53,10 @@ $breakpoints: (
  "components/footer",
  "components/form",
  "components/video-card",
- "components/course-card";
+ "components/course-card",
+ "components/dropdown";
 // 3. templates
 @import 
  "templates/home",
+ "templates/course-single",
  "templates/login";

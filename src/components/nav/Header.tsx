@@ -8,11 +8,13 @@ const Header = () => {
   return (
     <header className='header'>
       <div className='container header__wrapper'>
-        <img className='header__logo' src='/logo.png' alt='interactivecares' />
+        <Button type='link' url='/'>
+          <img className='header__logo' src='/logo.png' alt='interactivecares' />
+        </Button>
         <div className='header__icons'>
-          <button type='button' className='header__icons-wrapper'>
+          <Button type='button' className='header__icons-wrapper'>
             <CartIcon className='header__icon' />
-          </button>
+          </Button>
           {userData && status === "authenticated" ? (
             <Button
               type='button'

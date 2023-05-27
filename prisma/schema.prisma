@@ -17,6 +17,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    Course        Course[]
 }
 
 model Account {
@@ -62,39 +63,64 @@ model Course {
     type        String   @db.VarChar(255)
     review_rate Int      @default(0)
     lessons     Int      @default(0)
-    length      String   @db.VarChar(255)
+    length      Int      @default(0)
     price       Int      @default(0)
     oldPrice    Int      @default(0)
+    published   Boolean  @default(false)
     slug        Slug     @relation(fields: [slug_id], references: [id])
     category    Category @relation(fields: [category_id], references: [id])
-    media       Media[]
+    media       Media    @relation(fields: [media_id], references: [id])
+    topic       Topic[]
+    user        User     @relation(fields: [user_email], references: [email], onDelete: Cascade)
     slug_id     Int
     category_id Int
+    media_id    Int
+    user_email  String
 
     @@unique([slug_id])
     @@unique([category_id])
+    @@unique([media_id])
+    @@index([user_email])
 }
 
 model Slug {
     id     Int     @id @unique @default(autoincrement())
-    title  String  @db.VarChar(255)
     url    String  @unique @db.VarChar(255)
-    Course Course?
+    course Course?
 }
 
 model Media {
-    id        Int    @id @unique @default(autoincrement())
-    name      String @db.VarChar(255)
-    url       String @db.VarChar(255)
-    Course    Course @relation(fields: [course_id], references: [id])
+    id     Int     @id @unique @default(autoincrement())
+    title  String  @db.VarChar(255)
+    url    String  @unique @db.VarChar(255)
+    course Course?
+}
+
+model Category {
+    id     Int     @id @unique @default(autoincrement())
+    title  String  @db.VarChar(255)
+    url    String  @unique @db.VarChar(255)
+    course Course?
+}
+
+model Topic {
+    id        Int     @id @unique @default(autoincrement())
+    title     String  @db.VarChar(255)
+    url       String  @unique @db.VarChar(255)
+    course    Course  @relation(fields: [course_id], references: [id])
+    video     Video[]
     course_id Int
 
     @@unique([course_id])
 }
 
-model Category {
-    id     Int     @id @unique @default(autoincrement())
-    name   String  @db.VarChar(255)
-    url    String  @db.VarChar(255)
-    Course Course?
+model Video {
+    id       Int    @id @unique @default(autoincrement())
+    title    String @db.VarChar(255)
+    type     String @db.VarChar(255)
+    url      String @unique @db.VarChar(255)
+    topic    Topic? @relation(fields: [topic_id], references: [id])
+    topic_id Int?
+
+    @@unique([topic_id])
 }

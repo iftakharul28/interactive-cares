@@ -8,19 +8,21 @@ export default async function Home() {
         <p className='home__text'>All Courses You Can Filter</p>
         <div className='home__courses-wrapper'>
           <div className='home__courses-first-row'>
-            <p>Category</p>
+            <h2 className='home__courses-heading'>Category</h2>
             <div>
               {courses.categoryList.map((item) => (
                 <div key={item.id}>
-                  <p>{item.name}</p>
+                  <p className='home__courses-text'>{item.name}</p>
                 </div>
               ))}
             </div>
           </div>
           <div className='home__courses-second-row'>
-            <div>
-              <p>Newest Item</p>
-              <p>{courses.courseList.length} Courses</p>
+            <div className='home__courses-heading-wrapper'>
+              <h2 className='home__courses-heading'>Newest Item</h2>
+              <p className='home__courses-text'>
+                <span className='home__courses-heading'>{courses.courseList.length}</span> Courses
+              </p>
             </div>
             <div className='courses__list-card-wrapper'>
               {courses.courseList.map((item, i) => (

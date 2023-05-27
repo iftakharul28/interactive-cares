@@ -1,26 +1,36 @@
-.home{
-  &__heading{
+.home {
+  &__heading {
     font-size: rem(40px);
     font-weight: 700;
     text-transform: capitalize;
     padding: rem(45px) 0;
   }
-  &__text{
+  &__text {
     font-size: rem(22px);
     padding: rem(25px) 0;
   }
-  &__courses{
+  &__courses {
     padding: rem(35px) 0;
     border-top: 1px solid $gray-300;
   }
-  &__courses-wrapper{
+  &__courses-wrapper {
     display: grid;
     grid-template-columns: 360px 1fr;
     gap: rem(20px);
   }
-  &__video-wrapper{
+  &__courses-heading-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__courses-heading {
+    font-size: rem(16px);
+    font-weight: 600;
+    padding: rem(16px) 0;
+  }
+  &__video-wrapper {
     display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(360px,1fr));
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
     gap: 12px;
   }
 }

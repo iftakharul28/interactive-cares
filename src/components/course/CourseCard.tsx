@@ -1,3 +1,4 @@
+import numbersFormat from "@/utils/numbersFormat";
 type Props = {
   title: string;
   url: string;
@@ -28,9 +29,9 @@ const CourseCard = (props: Props) => {
             <p className='course__card-user-text'>{props.user}</p>
           </div>
         </div>
-        <div className='course__card-price'>
-          <span>{props.oldPrice}</span>
-          <span>{props.price}</span>
+        <div className='course__card-price-wrapper'>
+          <span className='course__card-price course__card-oldprice'>৳ {numbersFormat(props.oldPrice)}</span>
+          <span className='course__card-price'>৳ {numbersFormat(props.price)}</span>
         </div>
       </article>
     </a>
