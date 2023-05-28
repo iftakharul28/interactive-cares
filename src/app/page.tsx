@@ -1,6 +1,4 @@
-import CourseCard from "@/components/course/CourseCard";
 import CourseList from "@/components/course/CourseList";
-import courses from "@/data/courses";
 import Http from "@/helper/http";
 import type { CategoryType, CourseType, MediaType, Options } from "@/types/cources";
 interface Course extends CourseType {

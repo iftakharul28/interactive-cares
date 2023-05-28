@@ -3,11 +3,11 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { prisma } from "@/helper/prisma";
-import { TopicType } from "@/types/cources";
+import type { TopicType } from "@/types/cources";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
-  const { title, slug, type, review_rate, lessons, price, oldPrice, length, video, topic, media, email, variants, category, tag, specifications, published } = req.body;
+  const { title, slug, type, review_rate, lessons, price, oldPrice, length, topic, media, category, published } = req.body;
   if (req.method === "POST") {
     try {
       await prisma.course.create({
