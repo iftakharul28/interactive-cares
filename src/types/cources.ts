@@ -20,15 +20,16 @@ export type CourseFormType = {
 };
 export type Options = {
   id?: number;
-  url: string;
+  title: string;
 };
 export interface CategoryType extends Options {
-  title: string;
+  slug: string;
 }
 export type SlugType = Options;
-export type TopicType = CategoryType;
 export type MediaType = CategoryType;
 
-export interface videoType extends CategoryType {
+export interface TopicType extends CategoryType {
   type: string;
+  durations: string;
+  video_id: string;
 }

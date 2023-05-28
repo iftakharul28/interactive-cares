@@ -3,10 +3,8 @@ import { useMemo, useState } from "react";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { CloseIcon, DownIcon, PlusIcon } from "@/constants/icons";
-import type { Options } from "@/types/cources";
-interface OptionsType extends Options {
-  title: string;
-}
+import type { CategoryType } from "@/types/cources";
+type OptionsType = CategoryType;
 type MultipleSelectProps = {
   multiple: true;
   value?: OptionsType[] | null;
@@ -52,9 +50,9 @@ const DropDown = ({ multiple, placeHolder, isSearchable, value, onChange, option
       return (
         <>
           {value?.map((option: OptionsType) => (
-            <div key={option.url} className='select__items'>
+            <div key={option.slug} className='select__items'>
               <p className='select__item-title'></p>
-              {option.url}
+              {option.slug}
               <button
                 type='button'
                 onClick={(e) => {
@@ -91,7 +89,7 @@ const DropDown = ({ multiple, placeHolder, isSearchable, value, onChange, option
   const AddSelect = () => {
     const [addSelect, setAddSelect] = useState<OptionsType>({
       title: "",
-      url: "",
+      slug: "",
     });
     return (
       <div className='select__form'>
@@ -119,9 +117,9 @@ const DropDown = ({ multiple, placeHolder, isSearchable, value, onChange, option
               className='form__input'
               placeholder='Slug'
               required
-              value={addSelect?.url ? addSelect?.url : ""}
+              value={addSelect?.slug ? addSelect?.slug : ""}
               onChange={(value) => {
-                setAddSelect({ ...addSelect, url: String(value) });
+                setAddSelect({ ...addSelect, slug: String(value) });
               }}>
               <label htmlFor='slug' className='form__label'>
                 Slug
@@ -133,9 +131,13 @@ const DropDown = ({ multiple, placeHolder, isSearchable, value, onChange, option
           type='button'
           className='select__option-button'
           onClick={() => {
-            if (addSelect?.title != undefined && addSelect?.url != undefined) {
+            if (addSelect?.title != undefined && addSelect?.slug != undefined) {
               selectOption({
                 ...addSelect,
+                slug: addSelect.title
+                  .replace(/ /g, "-")
+                  .replace(/[^\w-]+/g, "")
+                  .toLowerCase(),
                 id: Math.random(),
               });
               setShowInput(!showInput);
@@ -173,7 +175,7 @@ const DropDown = ({ multiple, placeHolder, isSearchable, value, onChange, option
               <Button
                 type='button'
                 onClick={() => selectOption(option)}
-                key={option.url}
+                key={option.slug}
                 className={`select__option button ${isOptionSelected(option) ? "styles.selected" : ""} 
             `}>
                 <p>{id + 1}</p>

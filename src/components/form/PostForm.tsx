@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import DropDown from "@/components/dropdown/DropDown";
-import VideoDropDown from "@/components/dropdown/VideoDropDown";
+import TopicDropDown from "@/components/dropdown/TopicDropDown";
 import { useDebouncedCallback } from "use-debounce";
-import type { CourseFormType, CategoryType, TopicType, videoType, MediaType } from "@/types/cources";
+import type { CourseFormType, CategoryType, TopicType, MediaType } from "@/types/cources";
 import Http from "@/helper/http";
 
 interface Course extends CourseFormType {
@@ -13,9 +13,8 @@ type Props = {
   categories: CategoryType[];
   images: MediaType[];
   topics: TopicType[];
-  videos: videoType[];
 };
-const PostForm = ({ categories, images, topics, videos }: Props) => {
+const PostForm = ({ categories, images, topics }: Props) => {
   const [cource, setCource] = useState<Course | null>({
     title: "",
     slug: "",
@@ -27,9 +26,8 @@ const PostForm = ({ categories, images, topics, videos }: Props) => {
     published: false,
   });
   const [category, setCategory] = useState<CategoryType>();
-  const [media, setMedia] = useState<TopicType>();
-  const [topic, setTopic] = useState<MediaType[]>([]);
-  const [video, setVideo] = useState<videoType[]>([]);
+  const [media, setMedia] = useState<MediaType>();
+  const [topic, setTopic] = useState<TopicType[]>([]);
   const debouncedSlug = useDebouncedCallback((value: string) => {
     if (!value) {
       setCource({ slug: "" });
@@ -58,15 +56,15 @@ const PostForm = ({ categories, images, topics, videos }: Props) => {
           oldPrice: 0,
           published: false,
         });
-        // setCategory({
-        //   name: "",
-        //   category_slug: "",
-        //   image: "",
-        // });
-        // setTag({
-        //   name: "",
-        //   tag_slug: "",
-        // });
+        setCategory({
+          title: "",
+          slug: "",
+        });
+        setMedia({
+          title: "",
+          slug: "",
+        });
+        setTopic([]);
       } else {
         const content = await data.json();
         console.log(content);
@@ -109,21 +107,6 @@ const PostForm = ({ categories, images, topics, videos }: Props) => {
             required
             onChange={(e) => setCource({ ...cource, slug: e.target.value })}
             value={cource?.slug ? cource?.slug : ""}
-          />
-        </div>
-        <div className='form__input-group mb-3'>
-          <label htmlFor='image' className='sr-only'>
-            Type
-          </label>
-          <input
-            className='form__input py-3 px-5'
-            type='text'
-            name='type'
-            placeholder='cource Type'
-            id='image'
-            required
-            onChange={(e) => setCource({ ...cource, type: e.target.value })}
-            value={cource?.type ? cource?.type : ""}
           />
         </div>
       </div>
@@ -193,16 +176,25 @@ const PostForm = ({ categories, images, topics, videos }: Props) => {
       </div>
       <div className='form__row'>
         <div className='form__input-group mb-3'>
-          <label htmlFor='category' className='sr-only'>
-            Category
+          <label htmlFor='image' className='sr-only'>
+            Type
           </label>
-          <DropDown options={categories} placeHolder='Search' isSearchable value={category} onChange={(category) => setCategory(category)} />
+          <input
+            className='form__input py-3 px-5'
+            type='text'
+            name='type'
+            placeholder='cource Type'
+            id='image'
+            required
+            onChange={(e) => setCource({ ...cource, type: e.target.value })}
+            value={cource?.type ? cource?.type : ""}
+          />
         </div>
         <div className='form__input-group mb-3'>
           <label htmlFor='category' className='sr-only'>
             Topic
           </label>
-          <DropDown options={topics} placeHolder='Search' multiple isSearchable value={topic} onChange={(tag) => setTopic(tag)} />
+          <TopicDropDown placeHolder='Search' multiple isSearchable options={topics} value={topic} onChange={(value) => setTopic(value)} />
         </div>
       </div>
       <div className='form__row'>
@@ -213,8 +205,10 @@ const PostForm = ({ categories, images, topics, videos }: Props) => {
           <DropDown options={images} placeHolder='Search' isSearchable value={media} onChange={(value) => setMedia(value)} />
         </div>
         <div className='form__input-group mb-3'>
-          <label htmlFor='category'>Video</label>
-          <VideoDropDown options={videos} placeHolder='Search' multiple isSearchable value={video} onChange={(value) => setVideo(value)} />
+          <label htmlFor='category' className='sr-only'>
+            Category
+          </label>
+          <DropDown options={categories} placeHolder='Search' isSearchable value={category} onChange={(category) => setCategory(category)} />
         </div>
       </div>
       <button
@@ -226,7 +220,6 @@ const PostForm = ({ categories, images, topics, videos }: Props) => {
             category,
             media,
             topic,
-            video,
           })
         }>
         post

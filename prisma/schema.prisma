@@ -91,7 +91,7 @@ model Course {
 
 model Slug {
     id     Int     @id @unique @default(autoincrement())
-    url    String  @unique @db.VarChar(255)
+    title  String  @unique @db.VarChar(255)
     course Course?
 
     createdAt DateTime @default(now()) @map(name: "created_at")
@@ -101,7 +101,7 @@ model Slug {
 model Media {
     id     Int     @id @unique @default(autoincrement())
     title  String  @db.VarChar(255)
-    url    String  @unique @db.VarChar(255)
+    slug   String  @unique @db.VarChar(255)
     course Course?
 
     createdAt DateTime @default(now()) @map(name: "created_at")
@@ -111,7 +111,7 @@ model Media {
 model Category {
     id     Int     @id @unique @default(autoincrement())
     title  String  @db.VarChar(255)
-    url    String  @unique @db.VarChar(255)
+    slug   String  @unique @db.VarChar(255)
     course Course?
 
     createdAt DateTime @default(now()) @map(name: "created_at")
@@ -119,29 +119,14 @@ model Category {
 }
 
 model Topic {
-    id        Int     @id @unique @default(autoincrement())
-    title     String  @db.VarChar(255)
-    url       String  @unique @db.VarChar(255)
-    course    Course  @relation(fields: [course_id], references: [id])
-    video     Video[]
-    course_id Int
+    id        Int      @id @unique @default(autoincrement())
+    title     String   @db.VarChar(255)
+    slug      String   @unique @db.VarChar(255)
+    type      String   @db.VarChar(255)
+    durations String   @db.VarChar(255)
+    video_id  String   @db.VarChar(255)
+    course    Course[]
 
     createdAt DateTime @default(now()) @map(name: "created_at")
     updatedAt DateTime @updatedAt @map(name: "updated_at")
-
-    @@unique([course_id])
-}
-
-model Video {
-    id       Int    @id @unique @default(autoincrement())
-    title    String @db.VarChar(255)
-    type     String @db.VarChar(255)
-    url      String @unique @db.VarChar(255)
-    topic    Topic? @relation(fields: [topic_id], references: [id])
-    topic_id Int?
-
-    createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @updatedAt @map(name: "updated_at")
-
-    @@unique([topic_id])
 }

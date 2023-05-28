@@ -3,11 +3,8 @@ import { useMemo, useState } from "react";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { CloseIcon, DownIcon, PlusIcon } from "@/constants/icons";
-import type { Options } from "@/types/cources";
-interface OptionsType extends Options {
-  title: string;
-  type: string;
-}
+import type { TopicType } from "@/types/cources";
+type OptionsType = TopicType;
 type MultipleSelectProps = {
   multiple: true;
   value?: OptionsType[] | null;
@@ -53,9 +50,9 @@ const VideoDropDown = ({ multiple, placeHolder, isSearchable, value, onChange, o
       return (
         <>
           {value?.map((option: OptionsType) => (
-            <div key={option.url} className='select__items'>
+            <div key={option.slug} className='select__items'>
               <p className='select__item-title'></p>
-              {option.url}
+              {option.slug}
               <span
                 onClick={(e) => {
                   e.stopPropagation();
@@ -88,11 +85,13 @@ const VideoDropDown = ({ multiple, placeHolder, isSearchable, value, onChange, o
     const [addSelect, setAddSelect] = useState<OptionsType>({
       title: "",
       type: "",
-      url: "",
+      slug: "",
+      video_id: "",
+      durations: "",
     });
     return (
       <div className='select__form'>
-        <div className='form__row  select__form-row'>
+        <div className='form__row select__form-row'>
           <div className='form__input-group'>
             <Input
               id='name'
@@ -108,11 +107,31 @@ const VideoDropDown = ({ multiple, placeHolder, isSearchable, value, onChange, o
                 Name
               </label>
             </Input>
+          </div>
+        </div>
+        <div className='form__row select__form-row'>
+          <div className='form__input-group'>
+            <Input
+              id='slug'
+              type='text'
+              className='form__input'
+              placeholder='Slug'
+              required
+              value={addSelect?.slug ? addSelect?.slug : ""}
+              onChange={(value) => {
+                setAddSelect({ ...addSelect, slug: String(value) });
+              }}>
+              <label htmlFor='slug' className='form__label'>
+                Slug
+              </label>
+            </Input>
+          </div>
+          <div className='form__input-group'>
             <Input
               id='type'
               type='text'
               className='form__input'
-              placeholder='Name'
+              placeholder='Type'
               required
               value={addSelect?.type ? addSelect?.type : ""}
               onChange={(value) => {
@@ -123,19 +142,37 @@ const VideoDropDown = ({ multiple, placeHolder, isSearchable, value, onChange, o
               </label>
             </Input>
           </div>
+        </div>
+        <div className='form__row select__form-row'>
           <div className='form__input-group'>
             <Input
-              id='slug'
+              id='durations'
               type='text'
               className='form__input'
-              placeholder='Slug'
+              placeholder='Video durations'
               required
-              value={addSelect?.url ? addSelect?.url : ""}
+              value={addSelect?.durations ? addSelect?.durations : ""}
               onChange={(value) => {
-                setAddSelect({ ...addSelect, url: String(value) });
+                setAddSelect({ ...addSelect, durations: String(value) });
               }}>
-              <label htmlFor='slug' className='form__label'>
-                Slug
+              <label htmlFor='durations' className='form__label'>
+                video Durations
+              </label>
+            </Input>
+          </div>
+          <div className='form__input-group'>
+            <Input
+              id='video_id'
+              type='text'
+              className='form__input'
+              placeholder='Video Id'
+              required
+              value={addSelect?.video_id ? addSelect?.video_id : ""}
+              onChange={(value) => {
+                setAddSelect({ ...addSelect, video_id: String(value) });
+              }}>
+              <label htmlFor='video_id' className='form__label'>
+                video Id
               </label>
             </Input>
           </div>
@@ -144,9 +181,16 @@ const VideoDropDown = ({ multiple, placeHolder, isSearchable, value, onChange, o
           type='button'
           className='select__option-button'
           onClick={() => {
-            if (addSelect?.title != undefined && addSelect?.url != undefined) {
+            if (addSelect?.title != undefined && addSelect?.slug != undefined) {
               selectOption({
                 ...addSelect,
+                slug:
+                  addSelect?.slug != ""
+                    ? addSelect?.slug
+                    : addSelect.title
+                        .replace(/ /g, "-")
+                        .replace(/[^\w-]+/g, "")
+                        .toLowerCase(),
                 id: Math.random(),
               });
               setShowInput(!showInput);
@@ -184,7 +228,7 @@ const VideoDropDown = ({ multiple, placeHolder, isSearchable, value, onChange, o
               <Button
                 type='button'
                 onClick={() => selectOption(option)}
-                key={option.url}
+                key={option.slug}
                 className={`select__option button ${isOptionSelected(option) ? "styles.selected" : ""} 
             `}>
                 <p>{id + 1}</p>

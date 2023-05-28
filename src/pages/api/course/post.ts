@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { prisma } from "@/helper/prisma";
+import { TopicType } from "@/types/cources";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
@@ -22,10 +23,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           slug: {
             connectOrCreate: {
               create: {
-                url: slug,
+                title: slug,
               },
               where: {
-                url: slug,
+                title: slug,
               },
             },
           },
@@ -33,10 +34,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             connectOrCreate: {
               create: {
                 title: category.title,
-                url: category.url,
+                slug: category.slug,
               },
               where: {
-                url: category.url,
+                slug: category.slug,
               },
             },
           },
@@ -44,36 +45,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             connectOrCreate: {
               create: {
                 title: media.title,
-                url: media.url,
+                slug: media.slug,
               },
               where: {
-                url: media.url,
+                slug: media.slug,
               },
             },
           },
           topic: {
-            connectOrCreate: topic?.map(({ title, url }: { title: string; url: string }) => {
+            connectOrCreate: topic?.map(({ title, slug, type, video_id, durations }: TopicType) => {
               return {
                 create: {
                   title: title,
-                  url: url,
-                  video: {
-                    connectOrCreate: video?.map(({ title, url, type }: { title: string; url: string; type: string }) => {
-                      return {
-                        create: {
-                          title: title,
-                          url: url,
-                          type: type,
-                        },
-                        where: {
-                          url: url,
-                        },
-                      };
-                    }),
-                  },
+                  slug: slug,
+                  type: type,
+                  video_id: video_id,
+                  durations: durations,
                 },
                 where: {
-                  url: url,
+                  slug: slug,
                 },
               };
             }),

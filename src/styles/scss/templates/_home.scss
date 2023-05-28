@@ -28,6 +28,10 @@
     font-weight: 600;
     padding: rem(16px) 0;
   }
+  
+  &__courses-text{
+    padding: rem(8px) 0;
+  }
   &__video-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
