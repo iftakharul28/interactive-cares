@@ -1,8 +1,17 @@
 .course-single{
     display: grid;
-    grid-template-columns: 300px 1fr;
     min-height: 60vh;
-    margin: rem(56px) rem(24px);
+    margin: rem(56px) rem(16px);
+    @include mq(medium){
+        grid-template-columns: rem(300px) 1fr;
+        margin: rem(56px) rem(24px);
+    }
+    &__first-row{
+        grid-area: 2 / -1;
+        @include mq(medium){
+            grid-area: auto;
+        }
+    }
     &__topic-wrapper{
         padding: rem(16px) rem(8px);
         border-top: 1px solid $gray-300;

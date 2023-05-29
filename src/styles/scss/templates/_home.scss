@@ -1,22 +1,40 @@
 .home {
+  &__courses-first-row{
+    display: none;
+    @include mq(medium) {
+      display: block;
+    }
+  }
   &__heading {
     font-size: rem(40px);
     font-weight: 700;
     text-transform: capitalize;
-    padding: rem(45px) 0;
+    padding: rem(15px) 0;
+    @include mq(medium) {
+      padding: rem(45px) 0;
+    }
   }
   &__text {
     font-size: rem(22px);
-    padding: rem(25px) 0;
+    padding-bottom: rem(15px);
+    @include mq(medium) {
+      padding-bottom: rem(25px);
+    }
   }
   &__courses {
-    padding: rem(35px) 0;
+    padding: rem(25px) 0;
     border-top: 1px solid $gray-300;
+    @include mq(medium) {
+      padding: rem(35px) 0;
+    }
   }
   &__courses-wrapper {
-    display: grid;
-    grid-template-columns: 360px 1fr;
-    gap: rem(20px);
+    @include mq(medium) {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: rem(20px);
+      
+    }
   }
   &__courses-heading-wrapper {
     display: flex;

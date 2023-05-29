@@ -5,17 +5,42 @@
   }
   &__card {
     display: flex;
+    flex-direction: column;
+    gap: rem(10px);
+    @include mq(medium) {
+    flex-direction: row;
     gap: rem(20px);
   }
+  }
   &__card-image {
-    max-width: 230px;
+    order: 1;
+    max-width: 100%;
     height: auto;
     object-fit: cover;
+    
+    @include mq(medium) {
+      max-width: rem(230px);
+  }
   }
   &__card-info {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    order: 3;
+    gap: rem(8px);
+    @include mq(medium) {
+      order: 2;
+    }
+  }
+  &__card-price-wrapper {
+    order: 2;
+    display: flex;
+    gap: 6px;
+    flex-direction: row;
+    @include mq(medium) {
+      flex-direction: column;
+      order: 3;
+    }
   }
   &__card-heading {
     font-size: rem(20px);
@@ -39,11 +64,6 @@
   }
   &__card-user-text {
     color: $dark-700;
-  }
-  &__card-price-wrapper {
-    display: flex;
-    gap: 6px;
-    flex-direction: column;
   }
   &__card-oldprice {
     text-decoration: line-through;
