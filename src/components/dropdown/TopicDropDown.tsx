@@ -135,7 +135,7 @@ const VideoDropDown = ({ multiple, placeHolder, isSearchable, value, onChange, o
               required
               value={addSelect?.type ? addSelect?.type : ""}
               onChange={(value) => {
-                setAddSelect({ ...addSelect, type: value as string });
+                setAddSelect({ ...addSelect, type: value as any });
               }}>
               <label htmlFor='name' className='form__label'>
                 Type

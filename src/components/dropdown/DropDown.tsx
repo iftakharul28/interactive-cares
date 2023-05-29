@@ -134,10 +134,13 @@ const DropDown = ({ multiple, placeHolder, isSearchable, value, onChange, option
             if (addSelect?.title != undefined && addSelect?.slug != undefined) {
               selectOption({
                 ...addSelect,
-                slug: addSelect.title
-                  .replace(/ /g, "-")
-                  .replace(/[^\w-]+/g, "")
-                  .toLowerCase(),
+                slug:
+                  addSelect?.slug != ""
+                    ? addSelect?.slug
+                    : addSelect.title
+                        .replace(/ /g, "-")
+                        .replace(/[^\w-]+/g, "")
+                        .toLowerCase(),
                 id: Math.random(),
               });
               setShowInput(!showInput);

@@ -10,9 +10,9 @@ const VideoPlayer = (props: Props) => {
   if (props.type === "youtube") {
     return (
       <iframe
-        width='560'
-        height='315'
         className={props.className ? `${props.className}` : ""}
+        width={props.width ? `${props.width}` : "640"}
+        height={props.height ? `${props.height}` : "360"}
         src={`https://www.youtube.com/embed/${props.id}`}
         title='YouTube video player'
         frameBorder='0'

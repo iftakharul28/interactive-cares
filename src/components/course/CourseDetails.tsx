@@ -17,11 +17,12 @@ interface Course extends CourseType {
 
 const CourseDetails = ({ course }: { course: Course }) => {
   const [selectTopic, setSelectTopic] = useState<TopicType>(course.topic[0]);
+  console.log(selectTopic);
   return (
     <>
       <div className='course-single__first-row'>
         <div className='course-single__topic-head'>
-          <h2 className='course-single__topic-heading'>HTML</h2>
+          <h2 className='course-single__topic-heading'>Topic</h2>
           <button type='button'>
             <PlusIcon className='course-single__topic-icon' />
           </button>
@@ -40,7 +41,7 @@ const CourseDetails = ({ course }: { course: Course }) => {
       </div>
       <div className='course-single__second-row'>
         <div className='course-single__video-wrapper'>
-          <VideoPlayer type='default' className='course-single__video' id={selectTopic?.video_id} />
+          <VideoPlayer type={selectTopic.type ? selectTopic.type : "default"} className='course-single__video' id={selectTopic?.video_id} />
         </div>
       </div>
     </>

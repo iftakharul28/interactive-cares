@@ -29,7 +29,7 @@ export type SlugType = Options;
 export type MediaType = CategoryType;
 
 export interface TopicType extends CategoryType {
-  type: string;
+  type: "youtube" | "";
   durations: string;
   video_id: string;
 }
