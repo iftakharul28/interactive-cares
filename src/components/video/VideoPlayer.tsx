@@ -1,7 +1,6 @@
-"use client";
 type Props = {
   id?: string;
-  type?: "youtube" | "default";
+  type?: "youtube" | "";
   width?: number;
   height?: number;
   className?: string;

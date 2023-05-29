@@ -17,7 +17,7 @@ interface Course extends CourseType {
 
 const CourseDetails = ({ course }: { course: Course }) => {
   const [selectTopic, setSelectTopic] = useState<TopicType>(course.topic[0]);
-  console.log(selectTopic);
+
   return (
     <>
       <div className='course-single__first-row'>
@@ -41,7 +41,7 @@ const CourseDetails = ({ course }: { course: Course }) => {
       </div>
       <div className='course-single__second-row'>
         <div className='course-single__video-wrapper'>
-          <VideoPlayer type={selectTopic.type ? selectTopic.type : "default"} className='course-single__video' id={selectTopic?.video_id} />
+          <VideoPlayer type={selectTopic.type ? selectTopic.type : ""} className='course-single__video' id={selectTopic?.video_id} />
         </div>
       </div>
     </>
