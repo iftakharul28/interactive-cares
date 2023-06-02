@@ -15,11 +15,11 @@ model User {
   password      String?   @db.VarChar(255)
   emailVerified DateTime?
   image         String?
-  created_at    DateTime  @default(now())
-  updated_at    DateTime
   accounts      Account[]
   sessions      Session[]
   Course        Course[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Account {
@@ -64,55 +64,58 @@ model Course {
   price       Int      @default(0)
   oldPrice    Int      @default(0)
   published   Boolean  @default(false)
-  slug_id     Int      @unique
-  category_id Int      @unique
-  media_id    Int      @unique
-  user_email  String
-  created_at  DateTime @default(now())
-  updated_at  DateTime
   slug        Slug     @relation(fields: [slug_id], references: [id])
   category    Category @relation(fields: [category_id], references: [id])
   media       Media    @relation(fields: [media_id], references: [id])
   topic       Topic[]
   user        User     @relation(fields: [user_email], references: [email], onDelete: Cascade)
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user_email  String
+  slug_id     Int    @unique
+  media_id    Int    @unique
+  category_id Int
+
+  @@index([category_id])
   @@index([user_email])
 }
 
 model Slug {
-  id         Int      @id @unique @default(autoincrement())
-  title      String   @unique @db.VarChar(255)
-  created_at DateTime @default(now())
-  updated_at DateTime
-  course     Course?
+  id        Int      @id @unique @default(autoincrement())
+  title     String   @unique @db.VarChar(255)
+  course    Course?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Media {
-  id         Int      @id @unique @default(autoincrement())
-  title      String   @db.VarChar(255)
-  created_at DateTime @default(now())
-  updated_at DateTime
-  slug       String   @unique @db.VarChar(255)
-  course     Course?
+  id        Int      @id @unique @default(autoincrement())
+  title     String   @db.VarChar(255)
+  slug      String   @unique @db.VarChar(255)
+  course    Course?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Category {
-  id         Int      @id @unique @default(autoincrement())
-  title      String   @db.VarChar(255)
-  slug       String   @unique @db.VarChar(255)
-  created_at DateTime @default(now())
-  updated_at DateTime
-  course     Course?
+  id        Int      @id @unique @default(autoincrement())
+  title     String   @db.VarChar(255)
+  slug      String   @unique @db.VarChar(255)
+  course    Course[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Topic {
-  id         Int      @id @unique @default(autoincrement())
-  title      String   @db.VarChar(255)
-  slug       String   @unique @db.VarChar(255)
-  type       String   @db.VarChar(255)
-  durations  String   @db.VarChar(255)
-  video_id   String   @db.VarChar(255)
-  created_at DateTime @default(now())
-  updated_at DateTime
-  course     Course[]
+  id        Int      @id @unique @default(autoincrement())
+  title     String   @db.VarChar(255)
+  slug      String   @unique @db.VarChar(255)
+  type      String   @db.VarChar(255)
+  durations String   @db.VarChar(255)
+  video_id  String   @db.VarChar(255)
+  course    Course[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

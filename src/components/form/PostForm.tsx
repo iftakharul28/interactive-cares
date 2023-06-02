@@ -20,7 +20,7 @@ const PostForm = ({ categories, images, topics }: Props) => {
     slug: "",
     type: "",
     lessons: 0,
-    length: 0,
+    length: "",
     price: 0,
     oldPrice: 0,
     published: false,
@@ -52,6 +52,7 @@ const PostForm = ({ categories, images, topics }: Props) => {
         setCource({
           title: "",
           slug: "",
+          length: "",
           price: 0,
           oldPrice: 0,
           published: false,
@@ -132,12 +133,12 @@ const PostForm = ({ categories, images, topics }: Props) => {
           </label>
           <input
             className='form__input py-3 px-5'
-            type='number'
+            type='text'
             name='length'
-            placeholder='Discount cource length'
+            placeholder='Cource length'
             id='length'
             required
-            onChange={(e) => setCource({ ...cource, length: Number(e.target.value) })}
+            onChange={(e) => setCource({ ...cource, length: e.target.value })}
             value={cource?.length ? cource?.length : ""}
           />
         </div>

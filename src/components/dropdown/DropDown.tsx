@@ -177,7 +177,13 @@ const DropDown = ({ multiple, placeHolder, isSearchable, value, onChange, option
             {getOptions?.map((option, id) => (
               <Button
                 type='button'
-                onClick={() => selectOption(option)}
+                onClick={() =>
+                  selectOption({
+                    id: option.id,
+                    title: option.title,
+                    slug: option.slug,
+                  })
+                }
                 key={option.slug}
                 className={`select__option button ${isOptionSelected(option) ? "styles.selected" : ""} 
             `}>

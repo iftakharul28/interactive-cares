@@ -20,7 +20,6 @@ type Props = {
 const CourseList = ({ category, course }: Props) => {
   const [filter, setFilter] = useState<number>();
   const [courses, setCourses] = useState<Course[]>([]);
-  console.log(course);
   useEffect(() => {
     if (filter) {
       const find = course.filter((item) => item.category.id === filter);
@@ -51,10 +50,10 @@ const CourseList = ({ category, course }: Props) => {
           </p>
         </div>
         <div className='courses__list-card-wrapper'>
-          {courses.map((item, i) => (
+          {courses.map((item) => (
             <CourseCard
+              key={`course-card-${item.id}`}
               url={item.slug.title}
-              key={i}
               title={item.title}
               media={item.media.slug}
               type={item.type}

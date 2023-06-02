@@ -227,7 +227,16 @@ const VideoDropDown = ({ multiple, placeHolder, isSearchable, value, onChange, o
             {getOptions?.map((option, id) => (
               <Button
                 type='button'
-                onClick={() => selectOption(option)}
+                onClick={() =>
+                  selectOption({
+                    id: option.id,
+                    title: option.title,
+                    type: option.type,
+                    slug: option.slug,
+                    video_id: option.video_id,
+                    durations: option.durations,
+                  })
+                }
                 key={option.slug}
                 className={`select__option button ${isOptionSelected(option) ? "styles.selected" : ""} 
             `}>
