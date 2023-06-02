@@ -1,132 +1,118 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider     = "mysql"
-    url          = env("DATABASE_URL")
-    relationMode = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model User {
-    id            String    @id @unique @default(cuid())
-    name          String?   @db.VarChar(255)
-    email         String?   @unique
-    password      String?   @db.VarChar(255)
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    Course        Course[]
-
-    createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @updatedAt @map(name: "updated_at")
+  id            String    @id @unique @default(cuid())
+  name          String?   @db.VarChar(255)
+  email         String?   @unique
+  password      String?   @db.VarChar(255)
+  emailVerified DateTime?
+  image         String?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime
+  accounts      Account[]
+  sessions      Session[]
+  Course        Course[]
 }
 
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? @db.Text
-    session_state     String?
-
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@unique([userId])
+  id                String  @id @default(cuid())
+  userId            String  @unique
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@unique([userId])
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String   @unique
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
 }
 
 model Course {
-    id          Int      @id @unique @default(autoincrement())
-    title       String   @db.VarChar(255)
-    type        String   @db.VarChar(255)
-    review_rate Int      @default(0)
-    lessons     Int      @default(0)
-    length      Int      @default(0)
-    price       Int      @default(0)
-    oldPrice    Int      @default(0)
-    published   Boolean  @default(false)
-    slug        Slug     @relation(fields: [slug_id], references: [id])
-    category    Category @relation(fields: [category_id], references: [id])
-    media       Media    @relation(fields: [media_id], references: [id])
-    topic       Topic[]
-    user        User     @relation(fields: [user_email], references: [email], onDelete: Cascade)
-    slug_id     Int
-    category_id Int
-    media_id    Int
-    user_email  String
+  id          Int      @id @unique @default(autoincrement())
+  title       String   @db.VarChar(255)
+  type        String   @db.VarChar(255)
+  review_rate Int      @default(0)
+  lessons     Int      @default(0)
+  length      String   @default("00:00:00") @db.VarChar(255)
+  price       Int      @default(0)
+  oldPrice    Int      @default(0)
+  published   Boolean  @default(false)
+  slug_id     Int      @unique
+  category_id Int      @unique
+  media_id    Int      @unique
+  user_email  String
+  created_at  DateTime @default(now())
+  updated_at  DateTime
+  slug        Slug     @relation(fields: [slug_id], references: [id])
+  category    Category @relation(fields: [category_id], references: [id])
+  media       Media    @relation(fields: [media_id], references: [id])
+  topic       Topic[]
+  user        User     @relation(fields: [user_email], references: [email], onDelete: Cascade)
 
-    createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @updatedAt @map(name: "updated_at")
-
-    @@unique([slug_id])
-    @@unique([category_id])
-    @@unique([media_id])
-    @@index([user_email])
+  @@index([user_email])
 }
 
 model Slug {
-    id     Int     @id @unique @default(autoincrement())
-    title  String  @unique @db.VarChar(255)
-    course Course?
-
-    createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @updatedAt @map(name: "updated_at")
+  id         Int      @id @unique @default(autoincrement())
+  title      String   @unique @db.VarChar(255)
+  created_at DateTime @default(now())
+  updated_at DateTime
+  course     Course?
 }
 
 model Media {
-    id     Int     @id @unique @default(autoincrement())
-    title  String  @db.VarChar(255)
-    slug   String  @unique @db.VarChar(255)
-    course Course?
-
-    createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @updatedAt @map(name: "updated_at")
+  id         Int      @id @unique @default(autoincrement())
+  title      String   @db.VarChar(255)
+  created_at DateTime @default(now())
+  updated_at DateTime
+  slug       String   @unique @db.VarChar(255)
+  course     Course?
 }
 
 model Category {
-    id     Int     @id @unique @default(autoincrement())
-    title  String  @db.VarChar(255)
-    slug   String  @unique @db.VarChar(255)
-    course Course?
-
-    createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @updatedAt @map(name: "updated_at")
+  id         Int      @id @unique @default(autoincrement())
+  title      String   @db.VarChar(255)
+  slug       String   @unique @db.VarChar(255)
+  created_at DateTime @default(now())
+  updated_at DateTime
+  course     Course?
 }
 
 model Topic {
-    id        Int      @id @unique @default(autoincrement())
-    title     String   @db.VarChar(255)
-    slug      String   @unique @db.VarChar(255)
-    type      String   @db.VarChar(255)
-    durations String   @db.VarChar(255)
-    video_id  String   @db.VarChar(255)
-    course    Course[]
-
-    createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @updatedAt @map(name: "updated_at")
+  id         Int      @id @unique @default(autoincrement())
+  title      String   @db.VarChar(255)
+  slug       String   @unique @db.VarChar(255)
+  type       String   @db.VarChar(255)
+  durations  String   @db.VarChar(255)
+  video_id   String   @db.VarChar(255)
+  created_at DateTime @default(now())
+  updated_at DateTime
+  course     Course[]
 }

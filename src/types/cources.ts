@@ -4,7 +4,7 @@ export type CourseType = {
   type: string;
   review_rate: number;
   lessons: number;
-  length: number;
+  length: string;
   price: number;
   oldPrice: number;
   published: boolean;

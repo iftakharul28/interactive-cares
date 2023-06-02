@@ -14,7 +14,7 @@ const VideoPlayer = (props: Props) => {
         height={props.height ? `${props.height}` : "360"}
         src={`https://www.youtube.com/embed/${props.id}`}
         title='YouTube video player'
-        frameBorder='0'
+        frameBorder={0}
         allow='accelerometer; autoplay; picture-in-picture; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
         allowFullScreen={true}></iframe>
     );

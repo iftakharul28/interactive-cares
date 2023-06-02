@@ -1,5 +1,9 @@
+"use client";
 import type { CategoryType, CourseType, MediaType, Options } from "@/types/cources";
 import CourseCard from "./CourseCard";
+import { useEffect, useState } from "react";
+import CheckBoxFilter from "../CheckBoxFilter";
+import Http from "@/helper/http";
 interface Course extends CourseType {
   slug: Options;
   category: CategoryType;
@@ -14,15 +18,28 @@ type Props = {
   category: CategoryType[];
 };
 const CourseList = ({ category, course }: Props) => {
+  const [filter, setFilter] = useState<number>();
+  const [courses, setCourses] = useState<Course[]>([]);
+  console.log(course);
+  useEffect(() => {
+    if (filter) {
+      const find = course.filter((item) => item.category.id === filter);
+      setCourses(find);
+    }
+  }, [filter]);
+  useEffect(() => {
+    setCourses(course);
+  }, [course]);
+  const changedFilterItem = (valueId: number) => {
+    setFilter(valueId);
+  };
   return (
     <div className='home__courses-wrapper'>
       <div className='home__courses-first-row'>
         <h2 className='home__courses-heading'>Category</h2>
         <div>
-          {category.map((item) => (
-            <div key={item.id}>
-              <p className='home__courses-text'>{item.title}</p>
-            </div>
+          {category?.map((item) => (
+            <CheckBoxFilter key={`filter-card-${item.id}`} item={item} selectedValues={filter} onChange={(filterItemValue) => changedFilterItem(filterItemValue)} />
           ))}
         </div>
       </div>
@@ -34,7 +51,7 @@ const CourseList = ({ category, course }: Props) => {
           </p>
         </div>
         <div className='courses__list-card-wrapper'>
-          {course.map((item, i) => (
+          {courses.map((item, i) => (
             <CourseCard
               url={item.slug.title}
               key={i}

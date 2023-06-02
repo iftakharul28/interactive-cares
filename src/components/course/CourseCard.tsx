@@ -1,10 +1,12 @@
+"use client";
+import TimeFormate from "@/utils/TimeFormate";
 import numbersFormat from "@/utils/numbersFormat";
 type Props = {
   title: string;
   url: string;
   media: string;
   type: string;
-  length: number;
+  length: string;
   lessons: number;
   user: string;
   oldPrice: number;
@@ -19,7 +21,7 @@ const CourseCard = (props: Props) => {
           <h2 className='course__card-heading'>{props.title}</h2>
           <div className='course__card-group'>
             <p>{props.type}</p>
-            <p>{props.length}</p>
+            <p>{TimeFormate(props.length)}</p>
             <p>{props.lessons} Lesson</p>
           </div>
           <div className='course__card-group'>
