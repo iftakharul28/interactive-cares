@@ -4,7 +4,6 @@ import { prisma } from "@/helper/prisma";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
-    const slug = req.query.slug as string;
     try {
       const data = await prisma.course.findMany({
         select: {

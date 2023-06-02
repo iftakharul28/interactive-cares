@@ -1,5 +1,5 @@
 const TimeFormate = (time: string) => {
-  const [hours, minutes, seconds] = time.split(":").map(Number);
+  const [hours, minutes] = time.split(":").map(Number);
 
   return `${hours}h ${minutes}m`;
 };

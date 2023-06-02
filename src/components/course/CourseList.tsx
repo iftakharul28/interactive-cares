@@ -3,7 +3,6 @@ import type { CategoryType, CourseType, MediaType, Options } from "@/types/courc
 import CourseCard from "./CourseCard";
 import { useEffect, useState } from "react";
 import CheckBoxFilter from "../CheckBoxFilter";
-import Http from "@/helper/http";
 interface Course extends CourseType {
   slug: Options;
   category: CategoryType;
@@ -46,7 +45,7 @@ const CourseList = ({ category, course }: Props) => {
         <div className='home__courses-heading-wrapper'>
           <h2 className='home__courses-heading'>Newest Item</h2>
           <p className='home__courses-text'>
-            <span className='home__courses-heading'>{course.length}</span> Courses
+            <span className='home__courses-heading'>{courses.length}</span> Courses
           </p>
         </div>
         <div className='courses__list-card-wrapper'>
